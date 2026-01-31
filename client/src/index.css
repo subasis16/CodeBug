@@ -8,22 +8,87 @@
   html {
     scroll-behavior: smooth;
   }
+
   body {
     @apply bg-ossium-darker text-ossium-text font-sans antialiased;
   }
 }
 
-.bg-grid {
-  background-size: 50px 50px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+/* Premium Dot Background - High Contrast */
+.bg-dot-pattern {
+  background-image: radial-gradient(#666 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.5;
+}
+
+/* Fluid Gradient Animation - Visible Colors */
+.bg-fluid-aurora {
+  background: radial-gradient(circle at 50% 50%, rgba(202, 255, 51, 0.15), transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15), transparent 50%);
+  filter: blur(80px);
+  animation: aurora-move 8s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-move {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-5%, 5%) scale(1.1);
+  }
+}
+
+/* Floating Particles - Visible & Moving */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  animation: float-up var(--duration) linear infinite;
+  bottom: -10vh;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: var(--opacity);
+  }
+
+  80% {
+    opacity: var(--opacity);
+  }
+
+  100% {
+    transform: translateY(-120vh) scale(1);
+    opacity: 0;
+  }
 }
 
 .glass-nav {
   background: rgba(10, 10, 10, 0.7);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
 }
