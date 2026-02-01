@@ -11,6 +11,8 @@ import Tools from './pages/Tools';
 import Roadmap from './pages/Roadmap';
 import AIWorkflow from './pages/AIWorkflow';
 
+import ScrollToTop from './components/ScrollToTop';
+
 // Internal component to use navigation hook
 const SearchWrapper = ({ children }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -38,6 +40,7 @@ const SearchWrapper = ({ children }) => {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <SearchWrapper>
         <div className="min-h-screen bg-ossium-darker text-white overflow-x-hidden selection:bg-ossium-accent selection:text-ossium-darker font-sans">
           <Routes>

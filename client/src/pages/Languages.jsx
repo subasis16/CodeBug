@@ -7,7 +7,7 @@ import {
   SiRuby, SiSwift, SiKotlin, SiPostgresql
 } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa';
-import { FiSearch, FiAlertTriangle, FiCode, FiLayers, FiLayout } from 'react-icons/fi';
+import { FiSearch, FiAlertTriangle, FiCode, FiLayers, FiLayout, FiZap } from 'react-icons/fi';
 
 const languagesData = [
   {
@@ -20,6 +20,7 @@ const languagesData = [
     structure: '/src, /public, package.json',
     mistakes: 'Implicit type coercion',
     color: 'text-yellow-400',
+    expert_tip: "Use WeakMap for private class data to avoid memory leaks."
   },
   {
     id: 2,
@@ -31,6 +32,7 @@ const languagesData = [
     structure: '/components, /hooks',
     mistakes: 'Mutating state directly',
     color: 'text-cyan-400',
+    expert_tip: "Use useLayoutEffect for DOM measurements to prevent flicker."
   },
   {
     id: 3,
@@ -42,6 +44,7 @@ const languagesData = [
     structure: 'requirements.txt, /venv',
     mistakes: 'Indentation errors',
     color: 'text-blue-500',
+    expert_tip: "Use __slots__ to save memory in classes with many instances."
   },
   {
     id: 4,
@@ -53,6 +56,7 @@ const languagesData = [
     structure: 'go.mod, /cmd, /pkg',
     mistakes: 'Unused variables strictness',
     color: 'text-cyan-300',
+    expert_tip: "Use buffered channels to limit concurrency without blocking."
   },
   {
     id: 5,
@@ -64,6 +68,7 @@ const languagesData = [
     structure: '/components, App.vue',
     mistakes: 'Reactivity pitfalls',
     color: 'text-green-500',
+    expert_tip: "Use shallowRef for large objects to skip deep reactivity cost."
   },
   {
     id: 6,
@@ -75,6 +80,7 @@ const languagesData = [
     structure: 'Cargo.toml, /src',
     mistakes: 'Borrow checker struggles',
     color: 'text-orange-500',
+    expert_tip: "Use Interior Mutability (RefCell) for mocking in tests."
   },
   {
     id: 7,
@@ -86,6 +92,7 @@ const languagesData = [
     structure: '/src/main/java, pom.xml',
     mistakes: 'NullPointerException',
     color: 'text-orange-600',
+    expert_tip: "Use CompletableFuture for non-blocking asynchronous chains."
   },
   {
     id: 8,
@@ -97,6 +104,7 @@ const languagesData = [
     structure: 'CMakeLists.txt, /src',
     mistakes: 'Memory leaks, Pointers',
     color: 'text-blue-700',
+    expert_tip: "Use RAII (Resource Acquisition Is Initialization) for resource safety."
   },
   {
     id: 9,
@@ -108,6 +116,7 @@ const languagesData = [
     structure: 'tsconfig.json, /src',
     mistakes: 'Any type overuse',
     color: 'text-blue-600',
+    expert_tip: "Use discriminating unions for type-safe state reduction."
   },
   {
     id: 10,
@@ -119,6 +128,7 @@ const languagesData = [
     structure: 'composer.json, /vendor',
     mistakes: 'Inconsistent naming',
     color: 'text-indigo-400',
+    expert_tip: "Use Generator functions to process large datasets memory-efficiently."
   },
   {
     id: 11,
@@ -130,6 +140,7 @@ const languagesData = [
     structure: 'Gemfile, Rakefile',
     mistakes: 'Overuse of magic',
     color: 'text-red-500',
+    expert_tip: "Use memoization ( ||= ) to cache expensive method results."
   },
   {
     id: 12,
@@ -141,6 +152,7 @@ const languagesData = [
     structure: 'Package.swift, /Sources',
     mistakes: 'Strong reference cycles',
     color: 'text-orange-500',
+    expert_tip: "Use copy-on-write optimization for custom value types."
   },
   {
     id: 13,
@@ -152,6 +164,7 @@ const languagesData = [
     structure: 'build.gradle.kts, /src',
     mistakes: 'Null safety assumptions',
     color: 'text-purple-500',
+    expert_tip: "Use inline functions for high-order functions to reduce overhead."
   },
   {
     id: 14,
@@ -163,6 +176,7 @@ const languagesData = [
     structure: 'schema.sql, migrations',
     mistakes: 'Injection vulnerability',
     color: 'text-blue-300',
+    expert_tip: "Use EXPLAIN ANALYZE to optimize query execution plans."
   }
 ];
 
@@ -245,6 +259,14 @@ const Languages = () => {
                   <div>
                     <p className="text-[10px] uppercase text-red-400 font-bold tracking-wider mb-0.5">Watch Out</p>
                     <p className="text-xs text-ossium-muted">{item.mistakes}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 pt-3 mt-3 border-t border-white/5 bg-yellow-500/5 p-2 rounded">
+                  <FiZap className="text-yellow-400 shrink-0 mt-0.5" size={14} />
+                  <div>
+                    <p className="text-[10px] uppercase text-yellow-400 font-bold tracking-wider mb-0.5">Pro Tip</p>
+                    <p className="text-xs text-ossium-muted">{item.expert_tip}</p>
                   </div>
                 </div>
               </div>

@@ -3,89 +3,114 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {
   SiReact, SiJavascript, SiNodedotjs, SiGit,
-  SiPython, SiDocker, SiCss3, SiMongodb
+  SiPython, SiDocker, SiCss3, SiMongodb, SiTypescript
 } from 'react-icons/si';
 
 const errorsData = [
+  // Beginner
   {
     id: 1,
-    tech: 'React',
-    error: 'Hydration failed because the initial UI does not match what was rendered on the server.',
-    cause: 'Mismatch between HTML generated on server vs client (e.g., using `window` or `localStorage` during initial render).',
-    fix: 'Wrap client-only code in `useEffect` or check `if (typeof window !== "undefined")`.',
-    tag: 'Next.js',
-    icon: <SiReact />,
-    color: 'text-blue-400'
+    tech: 'Python',
+    level: 'Beginner',
+    error: 'IndentationError: unexpected indent',
+    cause: 'Mixing tabs and spaces or inconsistent indentation levels in your script.',
+    fix: 'Use spaces only (standard is 4). Enable "Show Whitespace" in your editor.',
+    icon: <SiPython />,
+    color: 'text-blue-500'
   },
   {
     id: 2,
     tech: 'JavaScript',
+    level: 'Beginner',
     error: "Cannot read properties of undefined (reading 'map')",
-    cause: 'Trying to iterate over a variable that is `undefined` or `null` instead of an array.',
-    fix: 'Use optional chaining `data?.map(...)` or provide a fallback `(data || []).map(...)`.',
-    tag: 'Runtime',
+    cause: 'Attempting to use .map() on a variable that is currently null or undefined.',
+    fix: 'Use optional chaining: data?.map(...) or fallback: (data || []).map(...)',
     icon: <SiJavascript />,
     color: 'text-yellow-400'
   },
   {
     id: 3,
+    tech: 'CSS',
+    level: 'Beginner',
+    error: 'z-index not working',
+    cause: 'The element has default position: static, which ignores z-index properties.',
+    fix: 'Set position: relative, absolute, or fixed on the element.',
+    icon: <SiCss3 />,
+    color: 'text-purple-400'
+  },
+
+  // Intermediate
+  {
+    id: 4,
+    tech: 'React',
+    level: 'Intermediate',
+    error: 'Hydration failed because the initial UI does not match server rendered HTML',
+    cause: 'Rendering data that differs on server/client (e.g., Date.now(), window).',
+    fix: 'Move client-specific logic into a useEffect hook.',
+    icon: <SiReact />,
+    color: 'text-blue-400'
+  },
+  {
+    id: 5,
     tech: 'Node.js',
+    level: 'Intermediate',
     error: 'Error: distinct address already in use :::3000',
-    cause: 'Another process is already running on the same port.',
-    fix: 'Kill the process using `npx kill-port 3000` or change the port number in your code.',
-    tag: 'Server',
+    cause: 'Port 3000 is occupied by a stuck process or another running server.',
+    fix: 'npx kill-port 3000 (or loops through lsof -i :3000)',
     icon: <SiNodedotjs />,
     color: 'text-green-500'
   },
   {
-    id: 4,
+    id: 6,
     tech: 'Git',
+    level: 'Intermediate',
     error: 'fatal: refusing to merge unrelated histories',
-    cause: 'Trying to pull from a remote repo that has a different commit history than local.',
-    fix: 'Use `git pull origin main --allow-unrelated-histories` to force the merge.',
-    tag: 'Version Control',
+    cause: 'Merging two repos that started independently (common when initing a new repo vs cloning).',
+    fix: 'git pull origin main --allow-unrelated-histories',
     icon: <SiGit />,
     color: 'text-orange-500'
   },
+
+  // Advanced / Expert
   {
-    id: 5,
-    tech: 'Python',
-    error: 'IndentationError: unexpected indent',
-    cause: 'Mixing tabs and spaces or inconsistent indentation levels.',
-    fix: 'Configure your editor to use spaces only (usually 4) or run an auto-formatter like Black.',
-    tag: 'Syntax',
-    icon: <SiPython />,
-    color: 'text-blue-500'
+    id: 7,
+    tech: 'React',
+    level: 'Advanced',
+    error: 'Error: Too many re-renders. React limits the number of renders...',
+    cause: 'State update is triggering a re-render which triggers the update again immediately.',
+    fix: 'Ensure setFunction is not called directly in the component body.',
+    icon: <SiReact />,
+    color: 'text-cyan-400'
   },
   {
-    id: 6,
+    id: 8,
+    tech: 'Node.js',
+    level: 'Advanced',
+    error: 'FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed',
+    cause: 'The application consumed more memory than the default V8 limit (approx 1.5GB).',
+    fix: 'node --max-old-space-size=4096 app.js',
+    icon: <SiNodedotjs />,
+    color: 'text-green-500'
+  },
+  {
+    id: 9,
     tech: 'Docker',
+    level: 'Advanced',
     error: 'exec user process caused: exec format error',
-    cause: 'Running an image built for a different architecture (e.g., Mac M1 ARM64 vs Linux AMD64).',
-    fix: 'Build with `docker buildx build --platform linux/amd64` for compatibility.',
-    tag: 'DevOps',
+    cause: 'Architecture mismatch (e.g., trying to run an ARM64 M1 image on an x86 server).',
+    fix: 'docker buildx build --platform linux/amd64 ...',
     icon: <SiDocker />,
     color: 'text-blue-400'
   },
   {
-    id: 7,
-    tech: 'CSS',
-    error: 'z-index not working',
-    cause: 'Element position is static (default behavior) which ignores z-index.',
-    fix: 'Set `position: relative`, `absolute`, or `fixed` on the element.',
-    tag: 'Layout',
-    icon: <SiCss3 />,
-    color: 'text-purple-400'
-  },
-  {
-    id: 8,
-    tech: 'MongoDB',
-    error: 'MongoNetworkError: connection timed out',
-    cause: 'IP address not whitelisted in MongoDB Atlas or incorrect connection string.',
-    fix: 'Add your current IP (0.0.0.0/0 for all) in Network Access settings.',
-    tag: 'Database',
-    icon: <SiMongodb />,
-    color: 'text-green-400'
+    id: 10,
+    tech: 'TypeScript',
+    level: 'Expert',
+    error: 'Type instantiation is excessively deep and possibly infinite.',
+    cause: 'Recursive type definitions creating an infinite loop in the compiler.',
+    fix: 'Use an interface to break recursion or simplify the utility type.',
+    icon: <SiTypescript />, // Note: Need to verify if SiTypescript is imported. It was in previous file but check carefully.
+    color: 'text-blue-600'
   }
 ];
 
@@ -95,8 +120,19 @@ const Errors = () => {
   const filteredErrors = errorsData.filter(item =>
     item.error.toLowerCase().includes(search.toLowerCase()) ||
     item.tech.toLowerCase().includes(search.toLowerCase()) ||
-    item.tag.toLowerCase().includes(search.toLowerCase())
+    item.level.toLowerCase().includes(search.toLowerCase())
   );
+
+  // Helper for badges
+  const getLevelColor = (level) => {
+    switch (level) {
+      case 'Beginner': return 'bg-green-500/10 text-green-400 border-green-500/20';
+      case 'Intermediate': return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
+      case 'Advanced': return 'bg-orange-500/10 text-orange-400 border-orange-500/20';
+      case 'Expert': return 'bg-red-500/10 text-red-400 border-red-500/20';
+      default: return 'bg-white/5 text-gray-400';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-ossium-darker text-white font-sans flex flex-col">
@@ -110,7 +146,7 @@ const Errors = () => {
             Bugs & <span className="text-red-400">Fixes</span>
           </h1>
           <p className="text-ossium-muted text-lg max-w-2xl mx-auto">
-            Don't let errors stop your flow. Find the solution in seconds.
+            Don't let errors stop your flow. Solutions ranked by difficulty.
           </p>
 
           {/* Search Input */}
@@ -119,7 +155,7 @@ const Errors = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Paste your error message here..."
+                placeholder="Search error, tech, or difficulty..."
                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-ossium-muted/50 focus:outline-none focus:ring-1 focus:ring-ossium-accent/30 transition-shadow shadow-xl"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -131,41 +167,53 @@ const Errors = () => {
           </div>
         </div>
 
-        {/* Results Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Results Grid - Simplified Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {filteredErrors.map(item => (
-            <div key={item.id} className="bg-[#121212] border border-white/5 rounded-xl p-6 hover:border-white/10 transition-all duration-200 group flex flex-col">
-              {/* Header: Tech & Tag */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <span className={`text-xl ${item.color}`}>{item.icon}</span>
-                  <span className="font-bold text-sm text-gray-300">{item.tech}</span>
+            <div key={item.id} className="bg-[#121212] border border-white/5 rounded-xl overflow-hidden hover:border-white/10 transition-all duration-200 group flex flex-col">
+
+              {/* Card Header */}
+              <div className="px-6 py-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+                <div className="flex items-center gap-3">
+                  <span className={`text-2xl ${item.color}`}>{item.icon}</span>
+                  <span className="font-bold text-base text-gray-200">{item.tech}</span>
                 </div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/5 text-ossium-muted border border-white/5">
-                  {item.tag}
+                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border ${getLevelColor(item.level)}`}>
+                  {item.level}
                 </span>
               </div>
 
-              {/* Error Message */}
-              <div className="bg-red-500/5 border border-red-500/10 rounded-lg p-3 mb-4 font-mono text-xs text-red-300 break-words leading-relaxed group-hover:bg-red-500/10 transition-colors">
-                <span className="select-none opacity-50 mr-2">$</span>
-                {item.error}
-              </div>
+              {/* Card Body */}
+              <div className="p-6 flex flex-col flex-1 gap-6">
 
-              {/* Cause & Fix */}
-              <div className="space-y-3 flex-1">
+                {/* The Bug */}
                 <div>
-                  <p className="text-[10px] uppercase text-ossium-muted font-bold tracking-wider mb-1">Possibly Caused By</p>
-                  <p className="text-sm text-gray-400 leading-snug">{item.cause}</p>
-                </div>
-                <div className="mt-auto">
-                  <p className="text-[10px] uppercase text-ossium-accent font-bold tracking-wider mb-1 flex items-center gap-1">
-                    <span>⚡</span> Quick Fix
-                  </p>
-                  <div className="bg-[#0a0a0a] rounded border border-white/5 p-2 text-sm text-gray-200 font-mono">
-                    {item.fix}
+                  <h3 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span> The Bug
+                  </h3>
+                  <div className="bg-red-500/5 border border-red-500/10 rounded-lg p-3 font-mono text-xs text-red-200/90 leading-relaxed">
+                    {item.error}
                   </div>
                 </div>
+
+                {/* The Why */}
+                <div className="pl-3 border-l-2 border-white/10">
+                  <p className="text-sm text-ossium-muted leading-relaxed">
+                    <span className="text-gray-400 font-medium">Why? </span>
+                    {item.cause}
+                  </p>
+                </div>
+
+                {/* The Fix */}
+                <div className="mt-auto">
+                  <h3 className="text-xs font-bold text-ossium-accent uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ossium-accent"></span> The Fix
+                  </h3>
+                  <div className="bg-ossium-accent/10 border border-ossium-accent/20 rounded-lg p-3 font-mono text-xs text-green-100 leading-relaxed shadow-sm">
+                    &gt; {item.fix}
+                  </div>
+                </div>
+
               </div>
             </div>
           ))}

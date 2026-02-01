@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-nav h-16 flex items-center justify-between px-6 md:px-12">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled
+        ? 'bg-[#0a0a0a]/70 backdrop-blur-md border-b border-white/5'
+        : 'bg-transparent'
+        }`}
+    >
       <Link to="/" className="flex items-center gap-3 cursor-pointer">
         <div className="w-8 h-8 bg-ossium-accent rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(202,255,51,0.4)]">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,14 +31,13 @@ const Navbar = () => {
             <path d="M10 9H8" stroke="#0a0a0a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <span className="text-white font-bold text-xl tracking-tight">CodeBug</span>
+        <span className="text-white font-bold text-xl tracking-tight">Code Ref</span>
       </Link>
 
       <div className="hidden md:flex items-center gap-8 text-sm font-medium text-ossium-muted">
-
         <Link to="/cheatsheets" className="hover:text-ossium-accent transition-colors">Cheat Sheets</Link>
         <Link to="/languages" className="hover:text-ossium-accent transition-colors">Languages</Link>
-        <Link to="/roadmap" className="hover:text-ossium-accent transition-colors">Roadmaps</Link>
+        <Link to="/roadmap" className="hover:text-ossium-accent transition-colors">Blueprint</Link>
         <Link to="/errors" className="hover:text-ossium-accent transition-colors">Bugs & Fixes</Link>
         <Link to="/tools" className="hover:text-ossium-accent transition-colors">Tools</Link>
       </div>
@@ -37,10 +53,33 @@ const Navbar = () => {
           </svg>
           <span className="text-[10px] font-mono border border-white/10 rounded px-1 group-hover:border-white/30">⌘K</span>
         </button>
-        <Link to="/dashboard" className="bg-ossium-text text-ossium-darker px-4 py-2 rounded-md text-sm font-bold hover:bg-white/90 hover:scale-105 transition-all">
+        <Link to="/dashboard" className="hidden md:block bg-ossium-text text-ossium-darker px-4 py-2 rounded-md text-sm font-bold hover:bg-white/90 hover:scale-105 transition-all">
           Dashboard
         </Link>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden text-white p-2"
+        >
+          {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="absolute top-16 left-0 right-0 bg-[#0a0a0a] border-b border-white/10 p-6 flex flex-col gap-4 md:hidden animate-fade-in-down shadow-2xl">
+          <Link to="/cheatsheets" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Cheat Sheets</Link>
+          <Link to="/languages" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Languages</Link>
+          <Link to="/roadmap" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Blueprint</Link>
+          <Link to="/errors" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Bugs & Fixes</Link>
+          <Link to="/tools" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Tools</Link>
+          <div className="h-px bg-white/5 w-full my-2"></div>
+          <Link to="/dashboard" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
+            Dashboard
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };

@@ -50,11 +50,20 @@ const CheatSheetDetail = () => {
           ]
         },
         {
-          title: "Middleware",
+          title: "Streams & Buffers (Intermediate)",
           items: [
-            { label: "Global use", code: "app.use(express.json());" },
-            { label: "Static files", code: "app.use(express.static('public'));" },
-            { label: "Custom middleware", code: `app.use((req, res, next) => {\n  console.log('Time:', Date.now());\n  next();\n});` }
+            { label: "Pipe Stream", code: "fs.createReadStream('in.txt').pipe(res);" },
+            { label: "Buffer alloc", code: "const buf = Buffer.alloc(10);" },
+            { label: "Buffer from string", code: "const buf = Buffer.from('hello');" }
+          ]
+        },
+        {
+          title: "Concurrency & Performance (Advanced)",
+          items: [
+            { label: "Cluster Mode", code: "const cluster = require('cluster');\nif (cluster.isPrimary) {\n  cluster.fork();\n}" },
+            { label: "Worker Threads", code: "const { Worker } = require('worker_threads');\nnew Worker('./worker.js');" },
+            { label: "Increase Memory", code: "node --max-old-space-size=4096 app.js" },
+            { label: "Event Loop", code: "process.nextTick(() => console.log('Priority'));" }
           ]
         }
       ]
@@ -127,9 +136,21 @@ const CheatSheetDetail = () => {
           ]
         },
         {
-          title: "Lists & Keys",
+          title: "Advanced Hooks & Patterns",
           items: [
-            { label: "Rendering Lists", code: "<ul>\n  {items.map(item => (\n    <li key={item.id}>{item.name}</li>\n  ))}\n</ul>" }
+            { label: "useReducer", code: "const [state, dispatch] = useReducer(reducer, initialState);" },
+            { label: "useMemo", code: "const cached = useMemo(() => compute(a, b), [a, b]);" },
+            { label: "useCallback", code: "const fn = useCallback(() => doSomething(a), [a]);" },
+            { label: "Custom Hook", code: "const useWindowSize = () => {\n  const [size, setSize] = useState(...);\n  return size;\n};" }
+          ]
+        },
+        {
+          title: "Performance & Architecture (Advanced)",
+          items: [
+            { label: "React.memo", code: "const Memoized = React.memo(MyComponent);" },
+            { label: "Lazy Load", code: "const OtherComponent = React.lazy(() => import('./OtherComponent'));" },
+            { label: "Portals", code: "createPortal(<Modal />, document.body);" },
+            { label: "Error Boundary", code: "static getDerivedStateFromError(error) {\n  return { hasError: true };\n}" }
           ]
         }
       ]
@@ -177,10 +198,21 @@ const CheatSheetDetail = () => {
           ]
         },
         {
-          title: "Loops",
+          title: "Intermediate Python",
           items: [
-            { label: "For Loop", code: "for x in fruits:\n  print(x)" },
-            { label: "While Loop", code: "while i < 6:\n  print(i)\n  i += 1" }
+            { label: "List Comprehension", code: "squares = [x**2 for x in range(10)]" },
+            { label: "Lambda", code: "add = lambda x, y: x + y" },
+            { label: "File I/O", code: "with open('file.txt', 'r') as f:\n    content = f.read()" },
+            { label: "Exception Handling", code: "try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print('Error')" }
+          ]
+        },
+        {
+          title: "Advanced Concepts",
+          items: [
+            { label: "Decorators", code: "@my_decorator\ndef func():\n    pass" },
+            { label: "Generators", code: "def gen():\n    yield 1\n    yield 2" },
+            { label: "Context Manager", code: "class ManagedFile:\n    def __enter__(self): pass\n    def __exit__(self, *args): pass" },
+            { label: "AsyncIO", code: "import asyncio\nasync def main():\n    await asyncio.sleep(1)" }
           ]
         }
       ]
