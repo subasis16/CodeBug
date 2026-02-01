@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiLayout, FiServer, FiCpu, FiGitBranch, FiTerminal, FiArrowRight } from 'react-icons/fi';
+import { FiFileText, FiLayout, FiServer, FiCpu, FiGitBranch, FiTerminal, FiArrowRight } from 'react-icons/fi';
 
 const categories = [
+  { id: 'cheatsheets', name: 'Cheat Sheets', icon: <FiFileText />, desc: 'Quick references, Syntax guides', path: '/cheatsheets' },
   { id: 'frontend', name: 'Frontend', icon: <FiLayout />, desc: 'React, Vue, Tailwind', path: '/languages' },
   { id: 'backend', name: 'Backend', icon: <FiServer />, desc: 'Node, Go, Python', path: '/languages' },
   { id: 'ai', name: 'AI Engineering', icon: <FiCpu />, desc: 'LLMs, RAG, LangChain', path: '/ai' },
