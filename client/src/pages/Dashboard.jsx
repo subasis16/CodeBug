@@ -5,8 +5,8 @@ import {
   SiReact, SiGit, SiDocker, SiPython, SiCss3, SiGo, SiLinux,
   SiTailwindcss, SiNodedotjs
 } from 'react-icons/si';
-import { FiSearch, FiStar, FiBook, FiLayout, FiZap, FiGlobe, FiMenu } from 'react-icons/fi';
-import { useLocation } from 'react-router-dom';
+import { FiSearch, FiStar, FiBook, FiLayout, FiZap, FiMenu } from 'react-icons/fi';
+import { useLocation, Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const location = useLocation();
@@ -18,14 +18,14 @@ const Dashboard = () => {
   const filters = ['All', 'React', 'Vue', 'Node.js', 'Python', 'Go', 'DevOps'];
 
   const projects = [
-    { id: 1, title: 'React Hooks Cheat Sheet', desc: 'Complete guide to useState, useEffect, and custom hooks.', tags: ['React', 'Frontend'], icon: <SiReact />, stars: '1.2k' },
-    { id: 2, title: 'Git Command Reference', desc: 'Essential git commands for daily workflow and recovery.', tags: ['Git', 'DevOps'], icon: <SiGit />, stars: '3.4k' },
-    { id: 3, title: 'Docker Compose Patterns', desc: 'Production-ready docker-compose templates for microservices.', tags: ['DevOps', 'Docker'], icon: <SiDocker />, stars: '890' },
-    { id: 4, title: 'Python Async/Await', desc: 'Deep dive into asyncio, coroutines, and event loops.', tags: ['Python', 'Backend'], icon: <SiPython />, stars: '2.1k' },
-    { id: 5, title: 'CSS Grid Layouts', desc: 'Copy-paste ready CSS grid snippets for modern web layouts.', tags: ['CSS', 'Frontend'], icon: <SiCss3 />, stars: '1.5k' },
-    { id: 6, title: 'Go Concurrency Patterns', desc: 'Visual guide to channels, waitgroups, and mutexes in Go.', tags: ['Go', 'Backend'], icon: <SiGo />, stars: '1.8k' },
-    { id: 7, title: 'Next.js 14 Handbook', desc: 'Routing, Server Actions, and new App Router patterns.', tags: ['React', 'Frontend'], icon: <FiLayout />, stars: '950' },
-    { id: 8, title: 'Linux PERM Guide', desc: 'Chmod, Chown, and file system permissions explained.', tags: ['Linux', 'DevOps'], icon: <SiLinux />, stars: '4.2k' },
+    { id: 1, title: 'React Hooks Cheat Sheet', desc: 'Complete guide to useState, useEffect, and custom hooks.', tags: ['React', 'Frontend'], icon: <SiReact />, stars: '1.2k', path: '/cheatsheets/react-hooks' },
+    { id: 2, title: 'Git Command Reference', desc: 'Essential git commands for daily workflow and recovery.', tags: ['Git', 'DevOps'], icon: <SiGit />, stars: '3.4k', path: '/cheatsheets/git-commands' },
+    { id: 3, title: 'Docker Compose Patterns', desc: 'Production-ready docker-compose templates for microservices.', tags: ['DevOps', 'Docker'], icon: <SiDocker />, stars: '890', path: '/cheatsheets/docker-compose' },
+    { id: 4, title: 'Python Async/Await', desc: 'Deep dive into asyncio, coroutines, and event loops.', tags: ['Python', 'Backend'], icon: <SiPython />, stars: '2.1k', path: '/cheatsheets/python-async' },
+    { id: 5, title: 'CSS Grid Layouts', desc: 'Copy-paste ready CSS grid snippets for modern web layouts.', tags: ['CSS', 'Frontend'], icon: <SiCss3 />, stars: '1.5k', path: '/cheatsheets/css-grid' },
+    { id: 6, title: 'Go Concurrency Patterns', desc: 'Visual guide to channels, waitgroups, and mutexes in Go.', tags: ['Go', 'Backend'], icon: <SiGo />, stars: '1.8k', path: '/cheatsheets/go-concurrency' },
+    { id: 7, title: 'Next.js 14 Handbook', desc: 'Routing, Server Actions, and new App Router patterns.', tags: ['React', 'Frontend'], icon: <FiLayout />, stars: '950', path: '/cheatsheets/nextjs-handbook' },
+    { id: 8, title: 'Linux PERM Guide', desc: 'Chmod, Chown, and file system permissions explained.', tags: ['Linux', 'DevOps'], icon: <SiLinux />, stars: '4.2k', path: '/cheatsheets/linux-perm' },
   ];
 
   const documentationLinks = [
@@ -38,6 +38,16 @@ const Dashboard = () => {
     { name: 'Python', url: 'https://docs.python.org/3/', icon: <SiPython />, desc: 'The Python Language Reference.' },
     { name: 'MDN Web Docs', url: 'https://developer.mozilla.org', icon: <FiBook />, desc: 'Resources for developers, by developers.' },
   ];
+
+  // Filter Logic
+  const filteredProjects = projects.filter(project => {
+    const matchesFilter = selectedFilter === 'All' || project.tags.includes(selectedFilter) || (selectedFilter === 'Node.js' && project.tags.includes('Backend')); // Approximate for Node/Backend overlap if specific tag missing
+    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-ossium-darker text-ossium-text flex">
@@ -66,14 +76,11 @@ const Dashboard = () => {
                 <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-ossium-muted group-focus-within:text-ossium-accent transition-colors" />
                 <input
                   type="text"
-                  readOnly
-                  onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
-                  placeholder={`Search ${currentTab === 'docs' ? 'docs' : 'references'}... (Cmd+K)`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={`Search ${currentTab === 'docs' ? 'docs' : 'references'}...`}
                   className="w-full bg-[#1A1A1A] border border-white/5 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-ossium-accent/50 transition-colors placeholder:text-ossium-muted/50 cursor-pointer text-white"
                 />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                  <kbd className="hidden sm:inline-block px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-[10px] items-center text-ossium-muted font-mono">⌘K</kbd>
-                </div>
               </div>
             </div>
 
@@ -103,69 +110,78 @@ const Dashboard = () => {
           {/* Dashboard Grid */}
           {currentTab === 'dashboard' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {projects.map((project) => (
-                <div
-                  key={project.id}
-                  className="group relative bg-[#121212] border border-white/5 rounded-xl p-5 hover:border-ossium-accent/30 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl border border-white/5 group-hover:border-ossium-accent/20 transition-colors text-white">
-                      {project.icon}
+              {filteredProjects.length > 0 ? (
+                filteredProjects.map((project) => (
+                  <Link
+                    to={project.path}
+                    key={project.id}
+                    className="group relative bg-[#121212] border border-white/5 rounded-xl p-5 hover:border-ossium-accent/30 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50 block"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl border border-white/5 group-hover:border-ossium-accent/20 transition-colors text-white">
+                        {project.icon}
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-ossium-muted font-mono">
+                        <FiStar className="text-ossium-accent" /> {project.stars}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-ossium-muted font-mono">
-                      <FiStar className="text-ossium-accent" /> {project.stars}
+
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-ossium-accent transition-colors truncate">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-sm text-ossium-muted mb-4 line-clamp-2 leading-relaxed">
+                      {project.desc}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mt-auto">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="px-2 py-0.5 rounded text-[10px] font-medium bg-white/5 text-ossium-muted uppercase tracking-wide border border-white/5 group-hover:border-white/10">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-ossium-accent transition-colors truncate">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-sm text-ossium-muted mb-4 line-clamp-2 leading-relaxed">
-                    {project.desc}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="px-2 py-0.5 rounded text-[10px] font-medium bg-white/5 text-ossium-muted uppercase tracking-wide border border-white/5 group-hover:border-white/10">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="col-span-full py-12 text-center text-ossium-muted">
+                  <p className="text-lg">No cheatsheets found matching your criteria.</p>
                 </div>
-              ))}
+              )}
             </div>
           )}
 
           {/* Documentation Grid */}
           {currentTab === 'docs' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {documentationLinks.map((doc) => (
-                <a
-                  key={doc.name}
-                  href={doc.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative bg-[#121212] border border-white/5 rounded-xl p-6 hover:border-ossium-accent/30 transition-all duration-300 hover:bg-white/[0.02]"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform text-white">
-                      {doc.icon}
+              {documentationLinks
+                .filter(doc => doc.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map((doc) => (
+                  <a
+                    key={doc.name}
+                    href={doc.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative bg-[#121212] border border-white/5 rounded-xl p-6 hover:border-ossium-accent/30 transition-all duration-300 hover:bg-white/[0.02]"
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform text-white">
+                        {doc.icon}
+                      </div>
+                      <h3 className="text-lg font-bold text-white group-hover:text-ossium-accent transition-colors">
+                        {doc.name}
+                      </h3>
                     </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-ossium-accent transition-colors">
-                      {doc.name}
-                    </h3>
-                  </div>
 
-                  <p className="text-sm text-ossium-muted mb-4 leading-relaxed h-10">
-                    {doc.desc}
-                  </p>
+                    <p className="text-sm text-ossium-muted mb-4 leading-relaxed h-10">
+                      {doc.desc}
+                    </p>
 
-                  <div className="flex items-center text-xs font-mono text-ossium-accent opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-                    Read Documentation &rarr;
-                  </div>
-                </a>
-              ))}
+                    <div className="flex items-center text-xs font-mono text-ossium-accent opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                      Read Documentation &rarr;
+                    </div>
+                  </a>
+                ))}
             </div>
           )}
 

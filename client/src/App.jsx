@@ -10,6 +10,7 @@ import Errors from './pages/Errors';
 import Tools from './pages/Tools';
 import Roadmap from './pages/Roadmap';
 import AIWorkflow from './pages/AIWorkflow';
+import About from './pages/About';
 
 import ScrollToTop from './components/ScrollToTop';
 
@@ -53,6 +54,7 @@ function App() {
             <Route path="/tools" element={<Tools />} />
             <Route path="/roadmap" element={<Roadmap />} />
             <Route path="/ai" element={<AIWorkflow />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </div>
       </SearchWrapper>

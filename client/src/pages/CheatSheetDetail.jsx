@@ -755,6 +755,269 @@ const CheatSheetDetail = () => {
         { title: "Commands", items: [{ label: "Install", code: "npm install <pkg>" }, { label: "Run", code: "npm run dev" }] }
       ]
     },
+    "react-hooks": {
+      title: "React Hooks Cheat Sheet",
+      desc: "Complete guide to useState, useEffect, and custom hooks.",
+      version: "v18",
+      sections: [
+        {
+          title: "Basic Hooks",
+          items: [
+            { label: "useState", code: "const [state, setState] = useState(initialState);" },
+            { label: "useEffect", code: "useEffect(() => {\n  // Effect\n  return () => { /* Cleanup */ };\n}, [dependencies]);" },
+            { label: "useContext", code: "const value = useContext(MyContext);" }
+          ]
+        },
+        {
+          title: "Additional Hooks",
+          items: [
+            { label: "useReducer", code: "const [state, dispatch] = useReducer(reducer, initialArg, init?);" },
+            { label: "useCallback", code: "const memoizedCallback = useCallback(() => {\n  doSomething(a, b);\n}, [a, b]);" },
+            { label: "useMemo", code: "const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);" },
+            { label: "useRef", code: "const refContainer = useRef(initialValue);" },
+            { label: "useImperativeHandle", code: "useImperativeHandle(ref, () => ({\n  focus: () => { inputRef.current.focus(); }\n}));" },
+            { label: "useLayoutEffect", code: "useLayoutEffect(() => {\n  // Fires synchronously after all DOM mutations\n}, []);" },
+            { label: "useDebugValue", code: "useDebugValue(value);" }
+          ]
+        }
+      ]
+    },
+    "git-commands": {
+      title: "Git Command Reference",
+      desc: "Essential git commands for daily workflow and recovery.",
+      version: "v2.4x",
+      sections: [
+        {
+          title: "Setup & Init",
+          items: [
+            { label: "Global Config", code: "git config --global user.name \"Name\"\ngit config --global user.email \"email@example.com\"" },
+            { label: "Init", code: "git init" },
+            { label: "Clone", code: "git clone <repo-url>" }
+          ]
+        },
+        {
+          title: "Staging & Committing",
+          items: [
+            { label: "Status", code: "git status" },
+            { label: "Add All", code: "git add ." },
+            { label: "Commit", code: "git commit -m \"Message\"" },
+            { label: "Amend (Fix last commit)", code: "git commit --amend" }
+          ]
+        },
+        {
+          title: "Branching & Merging",
+          items: [
+            { label: "List Branches", code: "git branch" },
+            { label: "New Branch", code: "git checkout -b <branch-name>" },
+            { label: "Delete Branch", code: "git branch -d <branch-name>" },
+            { label: "Merge", code: "git merge <branch-name>" },
+            { label: "Rebase", code: "git rebase master" }
+          ]
+        },
+        {
+          title: "Undo & Recovery",
+          items: [
+            { label: "Discard Changes", code: "git checkout -- <file>" },
+            { label: "Unstage", code: "git reset HEAD <file>" },
+            { label: "Hard Reset", code: "git reset --hard HEAD" },
+            { label: "Revert Commit", code: "git revert <commit-hash>" }
+          ]
+        }
+      ]
+    },
+    "docker-compose": {
+      title: "Docker Compose Patterns",
+      desc: "Production-ready docker-compose templates for microservices.",
+      version: "v2.24",
+      sections: [
+        {
+          title: "Basic Service",
+          items: [
+            { label: "Web Service", code: "services:\n  web:\n    image: nginx:alpine\n    ports:\n      - \"80:80\"" }
+          ]
+        },
+        {
+          title: "Database with Volume",
+          items: [
+            { label: "PostgreSQL", code: "services:\n  db:\n    image: postgres:15\n    environment:\n      POSTGRES_PASSWORD: example\n    volumes:\n      - db_data:/var/lib/postgresql/data\nvolumes:\n  db_data:" }
+          ]
+        },
+        {
+          title: "Networking",
+          items: [
+            { label: "Custom Network", code: "networks:\n  frontend:\n  backend:\n\nservices:\n  app:\n    networks:\n      - frontend\n      - backend" }
+          ]
+        },
+        {
+          title: "Commands",
+          items: [
+            { label: "Start", code: "docker-compose up -d" },
+            { label: "Stop", code: "docker-compose down" },
+            { label: "Logs", code: "docker-compose logs -f" },
+            { label: "Build", code: "docker-compose build" }
+          ]
+        }
+      ]
+    },
+    "python-async": {
+      title: "Python Async/Await",
+      desc: "Deep dive into asyncio, coroutines, and event loops.",
+      version: "3.11+",
+      sections: [
+        {
+          title: "Coroutines",
+          items: [
+            { label: "Define", code: "async def fetch_data():\n    print('start')\n    await asyncio.sleep(1)\n    print('done')\n    return {'data': 1}" },
+            { label: "Run", code: "import asyncio\nasyncio.run(fetch_data())" }
+          ]
+        },
+        {
+          title: "Concurrency",
+          items: [
+            { label: "Gather (Parallel)", code: "async def main():\n    L = await asyncio.gather(\n        fetch_data(),\n        fetch_data(),\n        fetch_data()\n    )\n    print(L)" }
+          ]
+        },
+        {
+          title: "Tasks",
+          items: [
+            { label: "Create Task", code: "task = asyncio.create_task(other_coro())" },
+            { label: "Wait for Task", code: "await task" }
+          ]
+        }
+      ]
+    },
+    "css-grid": {
+      title: "CSS Grid Layouts",
+      desc: "Copy-paste ready CSS grid snippets for modern web layouts.",
+      version: "L3",
+      sections: [
+        {
+          title: "Container",
+          items: [
+            { label: "Define Grid", code: "display: grid;\ngrid-template-columns: repeat(3, 1fr);\ngap: 1rem;" },
+            { label: "Inline Grid", code: "display: inline-grid;" }
+          ]
+        },
+        {
+          title: "Columns & Rows",
+          items: [
+            { label: "Fixed Width", code: "grid-template-columns: 100px 200px auto;" },
+            { label: "Repeat", code: "grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));" },
+            { label: "Fraction", code: "grid-template-columns: 1fr 2fr;" }
+          ]
+        },
+        {
+          title: "Alignment",
+          items: [
+            { label: "Justify Items", code: "justify-items: start | end | center | stretch;" },
+            { label: "Align Items", code: "align-items: start | end | center | stretch;" },
+            { label: "Place Content", code: "place-content: center;" }
+          ]
+        },
+        {
+          title: "Children",
+          items: [
+            { label: "Span Columns", code: "grid-column: span 2;" },
+            { label: "Specific Area", code: "grid-area: header;" }
+          ]
+        }
+      ]
+    },
+    "go-concurrency": {
+      title: "Go Concurrency Patterns",
+      desc: "Visual guide to channels, waitgroups, and mutexes in Go.",
+      version: "1.21",
+      sections: [
+        {
+          title: "Goroutines",
+          items: [
+            { label: "Start", code: "go myFunction()" },
+            { label: "Anonymous", code: "go func() {\n    fmt.Println(\"Async\")\n}()" }
+          ]
+        },
+        {
+          title: "Channels",
+          items: [
+            { label: "Create", code: "ch := make(chan int)" },
+            { label: "Send", code: "ch <- 42" },
+            { label: "Receive", code: "val := <-ch" },
+            { label: "Buffered", code: "ch := make(chan int, 100)" },
+            { label: "Close", code: "close(ch)" }
+          ]
+        },
+        {
+          title: "Synchronization",
+          items: [
+            { label: "WaitGroup", code: "var wg sync.WaitGroup\nwg.Add(1)\ngo func() {\n    defer wg.Done()\n    doWork()\n}()\nwg.Wait()" },
+            { label: "Mutex", code: "var mu sync.Mutex\nmu.Lock()\n// critical section\nmu.Unlock()" }
+          ]
+        },
+        {
+          title: "Select",
+          items: [
+            { label: "Select Statement", code: "select {\ncase msg1 := <-c1:\n    fmt.Println(msg1)\ncase msg2 := <-c2:\n    fmt.Println(msg2)\ncase <-time.After(1 * time.Second):\n    fmt.Println(\"timeout\")\n}" }
+          ]
+        }
+      ]
+    },
+    "nextjs-handbook": {
+      title: "Next.js 14 Handbook",
+      desc: "Routing, Server Actions, and new App Router patterns.",
+      version: "14.1",
+      sections: [
+        {
+          title: "Routing",
+          items: [
+            { label: "Page", code: "export default function Page() {\n  return <h1>Hello</h1>\n}" },
+            { label: "Layout", code: "export default function Layout({ children }) {\n  return <div>{children}</div>\n}" },
+            { label: "Loading UI", code: "export default function Loading() {\n  return <Skeleton />\n}" }
+          ]
+        },
+        {
+          title: "Data Fetching",
+          items: [
+            { label: "Server Component", code: "async function getData() {\n  const res = await fetch('https://api.example.com/...')\n  return res.json()\n}\n\nexport default async function Page() {\n  const data = await getData()\n  return <main>{/* ... */}</main>\n}" }
+          ]
+        },
+        {
+          title: "Server Actions",
+          items: [
+            { label: "Define Action", code: "'use server'\n\nexport async function create() {\n  // ...\n}" },
+            { label: "Invoke Form", code: "<form action={create}>\n  <button>Submit</button>\n</form>" }
+          ]
+        }
+      ]
+    },
+    "linux-perm": {
+      title: "Linux Permissions Guide",
+      desc: "Chmod, Chown, and file system permissions explained.",
+      version: "Std",
+      sections: [
+        {
+          title: "Understanding Mode",
+          items: [
+            { label: "rwx", code: "Read (4) + Write (2) + Execute (1)" },
+            { label: "User Group Others", code: "u=rwx, g=r-x, o=r--" }
+          ]
+        },
+        {
+          title: "Chmod (Change Mode)",
+          items: [
+            { label: "Numeric 755", code: "chmod 755 file.sh\n# u: rwx (7)\n# g: r-x (5)\n# o: r-x (5)" },
+            { label: "Symbolic", code: "chmod u+x file.sh" },
+            { label: "Recursive", code: "chmod -R 755 directory/" }
+          ]
+        },
+        {
+          title: "Chown (Change Owner)",
+          items: [
+            { label: "Change User", code: "chown user file" },
+            { label: "User & Group", code: "chown user:group file" },
+            { label: "Recursive", code: "chown -R user:group directory/" }
+          ]
+        }
+      ]
+    },
 
 
   };

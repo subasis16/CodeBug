@@ -20,7 +20,8 @@ const Footer = () => {
             The developer companion. Recall syntax, patterns, and docs in seconds. Built for the modern web.
           </p>
           <div className="flex gap-4">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-ossium-accent transition-colors text-sm font-medium">GitHub</a>
+            <a href="https://github.com/subasis16" target="_blank" rel="noopener noreferrer" className="text-white hover:text-ossium-accent transition-colors text-sm font-medium">GitHub</a>
+            <a href="https://www.linkedin.com/in/subasis-panigrahi-66a6b1352/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-ossium-accent transition-colors text-sm font-medium">LinkedIn</a>
           </div>
         </div>
 
@@ -49,6 +50,9 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-ossium-muted">
         <p>&copy; {new Date().getFullYear()} Code Ref. All rights reserved.</p>
+        <div className="flex gap-6 mt-4 md:mt-0">
+          <Link to="/about" className="hover:text-white transition-colors">About</Link>
+        </div>
       </div>
     </footer>
   );
