@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchModal from './components/SearchModal';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import CheatSheets from './pages/CheatSheets';
 import CheatSheetDetail from './pages/CheatSheetDetail';
 import Languages from './pages/Languages';
+import LanguageNotes from './pages/LanguageNotes';
 import Errors from './pages/Errors';
 import Tools from './pages/Tools';
 import Roadmap from './pages/Roadmap';
@@ -50,6 +51,7 @@ function App() {
             <Route path="/cheatsheets" element={<CheatSheets />} />
             <Route path="/cheatsheets/:id" element={<CheatSheetDetail />} />
             <Route path="/languages" element={<Languages />} />
+            <Route path="/languages/:id" element={<LanguageNotes />} />
             <Route path="/errors" element={<Errors />} />
             <Route path="/tools" element={<Tools />} />
             <Route path="/roadmap" element={<Roadmap />} />

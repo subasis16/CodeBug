@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiGrid, FiCode, FiStar, FiBook, FiSettings, FiBox } from 'react-icons/fi';
+import { FiGrid, FiCode, FiStar, FiBook, FiSettings, FiBox, FiCpu } from 'react-icons/fi';
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <FiGrid size={20} /> },
+    { id: 'dashboard', label: 'Dashboard', icon: <FiGrid size={20} />, path: '/dashboard' },
     { id: 'snippets', label: 'My Snippets', icon: <FiCode size={20} /> },
     { id: 'docs', label: 'Documentation', icon: <FiBook size={20} /> },
   ];
@@ -33,17 +33,31 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
         {/* Navigation */}
         <nav className="flex-1 py-6 px-3 space-y-1">
           {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => onTabChange(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === item.id
-                ? 'bg-white/5 text-ossium-accent border border-white/5'
-                : 'text-ossium-muted hover:text-white hover:bg-white/5 border border-transparent'
-                }`}
-            >
-              {item.icon}
-              {item.label}
-            </button>
+            item.path ? (
+              <Link
+                key={item.id}
+                to={item.path}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === item.id
+                  ? 'bg-white/5 text-ossium-accent border border-white/5'
+                  : 'text-ossium-muted hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={item.id}
+                onClick={() => onTabChange && onTabChange(item.id)}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === item.id
+                  ? 'bg-white/5 text-ossium-accent border border-white/5'
+                  : 'text-ossium-muted hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            )
           ))}
         </nav>
 

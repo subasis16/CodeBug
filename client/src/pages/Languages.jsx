@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 import {
   SiJavascript, SiReact, SiPython, SiGo,
   SiRust, SiCplusplus, SiTypescript, SiPhp,
@@ -216,7 +217,11 @@ const Languages = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredLanguages.map(item => (
-            <div key={item.id} className="bg-[#0f0f0f] border border-white/5 rounded-xl p-6 hover:border-ossium-accent/20 transition-all duration-300 group hover:-translate-y-1">
+            <Link
+              to={`/languages/${item.name.toLowerCase().replace(' ', '-')}`}
+              key={item.id}
+              className="bg-[#0f0f0f] border border-white/5 rounded-xl p-6 hover:border-ossium-accent/20 transition-all duration-300 group hover:-translate-y-1 block"
+            >
 
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
@@ -270,7 +275,7 @@ const Languages = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
