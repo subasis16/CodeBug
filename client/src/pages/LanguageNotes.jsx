@@ -205,11 +205,11 @@ const LanguageNotes = () => {
                   <div className="absolute left-[24px] top-12 bottom-[-64px] w-px bg-white/10 group-hover:bg-[#caff33]/30 transition-colors pointer-events-none" />
                 )}
 
-                <div className="flex items-start gap-6 mb-4">
+                <div className="flex items-start gap-4 md:gap-6 mb-4">
                   <div className="w-12 h-12 rounded-xl bg-[#1a1a1a] border border-white/10 text-ossium-accent flex items-center justify-center font-mono font-bold text-lg shrink-0 group-hover:border-ossium-accent/50 group-hover:scale-110 transition-all duration-300 shadow-lg z-10">
                     {index + 1 < 10 ? `0${index + 1}` : index + 1}
                   </div>
-                  <div className="flex-1 pt-1">
+                  <div className="flex-1 pt-1 min-w-0">
                     <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-ossium-accent transition-colors">
                       {section.title}
                     </h2>
