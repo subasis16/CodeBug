@@ -50,7 +50,7 @@ const Hero = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5 w-full sm:w-auto px-2 sm:px-0">
           <Link to="/dashboard" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-ossium-accent text-ossium-darker font-bold rounded-lg hover:bg-ossium-accent-hover transition-all shadow-[0_4px_20px_rgba(202,255,51,0.3)] text-sm sm:text-base text-center block">
-            Start Coding Faster
+            Dashboard
           </Link>
           <Link to="/dashboard" state={{ tab: 'docs' }} className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#1A1A1A] border border-white/10 text-white font-medium rounded-lg hover:bg-white/5 hover:border-white/20 transition-all text-sm sm:text-base backdrop-blur-md text-center block">
             View Documentation

@@ -1,55 +1,124 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiTrash2, FiSave, FiEdit3 } from 'react-icons/fi';
+import { supabase } from '../lib/supabaseClient';
+import { useAuth } from '../context/AuthContext';
 
 const Notes = () => {
-  const [notes, setNotes] = useState([
-    { id: 1, title: 'My First Note', content: 'Notes feature is currently under development.', date: new Date().toLocaleDateString() }
-  ]);
-
+  const { user } = useAuth();
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeNote, setActiveNote] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('user-notes', JSON.stringify(notes));
-  }, [notes]);
+    const fetchNotes = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('notes')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
 
-  const handleCreateNote = () => {
-    const newNote = {
-      id: Date.now(),
-      title: 'Untitled Note',
-      content: '',
-      date: new Date().toLocaleDateString()
+        if (error) throw error;
+        setNotes(data || []);
+      } catch (error) {
+        console.error('Error fetching notes:', error.message);
+      } finally {
+        setLoading(false);
+      }
     };
-    setNotes([newNote, ...notes]);
-    handleEditNote(newNote);
+
+    if (user) {
+      fetchNotes();
+    }
+  }, [user]);
+
+  const handleCreateNote = async () => {
+    try {
+      const newNote = {
+        title: 'Untitled Note',
+        content: '',
+        user_id: user.id
+      };
+
+      const { data, error } = await supabase
+        .from('notes')
+        .insert([newNote])
+        .select();
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        setNotes([data[0], ...notes]);
+        handleEditNote(data[0]);
+      }
+    } catch (error) {
+      console.error('Error creating note:', error.message);
+    }
   };
 
-  const handleDeleteNote = (id) => {
-    setNotes(notes.filter(note => note.id !== id));
-    if (activeNote && activeNote.id === id) {
-      setActiveNote(null);
-      setIsEditing(false);
+  const handleDeleteNote = async (id) => {
+    try {
+      const { error } = await supabase
+        .from('notes')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setNotes(notes.filter(note => note.id !== id));
+      if (activeNote && activeNote.id === id) {
+        setActiveNote(null);
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error('Error deleting note:', error.message);
     }
   };
 
   const handleEditNote = (note) => {
     setActiveNote(note);
-    setEditTitle(note.title);
-    setEditContent(note.content);
+    setEditTitle(note.title || '');
+    setEditContent(note.content || '');
     setIsEditing(true);
   };
 
-  const handleSaveNote = () => {
-    const updatedNotes = notes.map(note =>
-      note.id === activeNote.id
-        ? { ...note, title: editTitle, content: editContent, date: new Date().toLocaleDateString() }
-        : note
-    );
-    setNotes(updatedNotes);
-    setIsEditing(false);
-    setActiveNote(null);
+  const handleSaveNote = async () => {
+    if (!activeNote) return;
+
+    try {
+      setSaving(true);
+      const updates = {
+        title: editTitle,
+        content: editContent,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { error } = await supabase
+        .from('notes')
+        .update(updates)
+        .eq('id', activeNote.id);
+
+      if (error) throw error;
+
+      // Update local state
+      const updatedNotes = notes.map(note =>
+        note.id === activeNote.id
+          ? { ...note, ...updates }
+          : note
+      );
+      setNotes(updatedNotes);
+      setIsEditing(false);
+      setActiveNote(null);
+    } catch (error) {
+      console.error('Error updating note:', error.message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -61,19 +130,18 @@ const Notes = () => {
           <h2 className="text-xl font-bold text-white">My Notes</h2>
           <div className="relative group">
             <button
-              disabled
-              className="flex items-center gap-2 px-3 py-1.5 bg-ossium-accent/10 border border-ossium-accent/20 rounded-lg text-ossium-accent/50 text-sm font-medium cursor-not-allowed"
+              onClick={handleCreateNote}
+              className="flex items-center gap-2 px-3 py-1.5 bg-ossium-accent/10 border border-ossium-accent/20 rounded-lg text-ossium-accent hover:bg-ossium-accent/20 transition-colors text-sm font-medium"
             >
               <FiPlus /> New Note
             </button>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black text-xs text-white rounded border border-white/10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              Coming soon
-            </div>
           </div>
         </div>
 
         <div className="flex-1 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-          {notes.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-10 text-ossium-muted text-sm">Loading notes...</div>
+          ) : notes.length === 0 ? (
             <div className="text-center py-10 text-ossium-muted text-sm border-2 border-dashed border-white/5 rounded-xl">
               No notes yet. Create one!
             </div>
@@ -91,7 +159,9 @@ const Notes = () => {
                   <h3 className={`font-bold truncate ${activeNote?.id === note.id ? 'text-ossium-accent' : 'text-white'}`}>
                     {note.title || 'Untitled Note'}
                   </h3>
-                  <span className="text-[10px] text-ossium-muted font-mono">{note.date}</span>
+                  <span className="text-[10px] text-ossium-muted font-mono">
+                    {new Date(note.created_at || Date.now()).toLocaleDateString()}
+                  </span>
                 </div>
                 <p className="text-xs text-ossium-muted line-clamp-2 leading-relaxed">
                   {note.content || 'No content...'}
@@ -124,14 +194,12 @@ const Notes = () => {
               />
               <div className="relative group">
                 <button
-                  disabled
-                  className="flex items-center gap-2 px-4 py-2 bg-ossium-accent/50 text-ossium-darker rounded-lg font-bold cursor-not-allowed"
+                  onClick={handleSaveNote}
+                  disabled={saving}
+                  className="flex items-center gap-2 px-4 py-2 bg-ossium-accent text-ossium-darker rounded-lg font-bold hover:bg-ossium-accent-hover transition-colors disabled:opacity-50"
                 >
-                  <FiSave /> Save
+                  <FiSave /> {saving ? 'Saving...' : 'Save'}
                 </button>
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black text-xs text-white rounded border border-white/10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  Coming soon
-                </div>
               </div>
             </div>
             <textarea

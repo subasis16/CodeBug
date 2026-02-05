@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Notes from '../components/Notes';
 import {
@@ -8,12 +8,23 @@ import {
 import { FiSearch, FiStar, FiBook, FiLayout, FiZap, FiMenu } from 'react-icons/fi';
 import { useLocation, Link } from 'react-router-dom';
 
+import { useAuth } from '../context/AuthContext';
+
 const Dashboard = () => {
+  const { user } = useAuth();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [currentTab, setCurrentTab] = useState(location.state?.tab || 'dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.tab) {
+      setCurrentTab(location.state.tab);
+    } else if (location.pathname === '/dashboard') {
+      setCurrentTab('dashboard');
+    }
+  }, [location.state, location.pathname]);
 
   const filters = ['All', 'React', 'Vue', 'Node.js', 'Python', 'Go', 'DevOps'];
 
@@ -188,7 +199,25 @@ const Dashboard = () => {
 
           {/* Notes / Snippets Section */}
           {(currentTab === 'snippets' || currentTab === 'notes') && (
-            <Notes />
+            user ? (
+              <Notes />
+            ) : (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 text-ossium-muted">
+                  <FiBook size={32} />
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-3">Login to access Notes</h2>
+                <p className="text-ossium-muted max-w-md mb-8">
+                  Create, save, and manage your personal coding snippets and cheat sheets securely in the cloud.
+                </p>
+                <Link
+                  to="/login"
+                  className="px-8 py-3 bg-ossium-accent text-ossium-darker font-bold rounded-lg hover:bg-ossium-accent-hover transition-all"
+                >
+                  Log In to Continue
+                </Link>
+              </div>
+            )
           )}
 
           {/* Work in progress placeholder for other tabs */}

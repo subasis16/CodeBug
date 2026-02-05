@@ -1,8 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiGrid, FiCode, FiStar, FiBook, FiSettings, FiBox, FiCpu } from 'react-icons/fi';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiGrid, FiCode, FiStar, FiBook, FiSettings, FiBox, FiCpu, FiLogOut } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/');
+  };
+
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: <FiGrid size={20} />, path: '/dashboard' },
     { id: 'snippets', label: 'My Snippets', icon: <FiCode size={20} /> },
@@ -68,6 +77,15 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
         </nav>
 
 
+        <div className="p-4 mt-auto border-t border-white/5">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:bg-red-400/10 transition-colors"
+          >
+            <FiLogOut size={20} />
+            Log Out
+          </button>
+        </div>
       </aside>
     </>
   );

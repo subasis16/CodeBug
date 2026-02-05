@@ -11,7 +11,10 @@ import Errors from './pages/Errors';
 import Tools from './pages/Tools';
 import Roadmap from './pages/Roadmap';
 import AIWorkflow from './pages/AIWorkflow';
+import Setup from './pages/Setup';
 import About from './pages/About';
+import Login from './pages/Login';
+import { AuthProvider } from './context/AuthContext';
 
 import ScrollToTop from './components/ScrollToTop';
 
@@ -42,24 +45,28 @@ const SearchWrapper = ({ children }) => {
 function App() {
   return (
     <Router>
-      <ScrollToTop />
-      <SearchWrapper>
-        <div className="min-h-screen bg-ossium-darker text-white overflow-x-hidden selection:bg-ossium-accent selection:text-ossium-darker font-sans">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/cheatsheets" element={<CheatSheets />} />
-            <Route path="/cheatsheets/:id" element={<CheatSheetDetail />} />
-            <Route path="/languages" element={<Languages />} />
-            <Route path="/languages/:id" element={<LanguageNotes />} />
-            <Route path="/errors" element={<Errors />} />
-            <Route path="/tools" element={<Tools />} />
-            <Route path="/roadmap" element={<Roadmap />} />
-            <Route path="/ai" element={<AIWorkflow />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </div>
-      </SearchWrapper>
+      <AuthProvider>
+        <ScrollToTop />
+        <SearchWrapper>
+          <div className="min-h-screen bg-ossium-darker text-white overflow-x-hidden selection:bg-ossium-accent selection:text-ossium-darker font-sans">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/cheatsheets" element={<CheatSheets />} />
+              <Route path="/cheatsheets/:id" element={<CheatSheetDetail />} />
+              <Route path="/languages" element={<Languages />} />
+              <Route path="/languages/:id" element={<LanguageNotes />} />
+              <Route path="/errors" element={<Errors />} />
+              <Route path="/tools" element={<Tools />} />
+              <Route path="/roadmap" element={<Roadmap />} />
+              <Route path="/ai" element={<AIWorkflow />} />
+              <Route path="/setup" element={<Setup />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </div>
+        </SearchWrapper>
+      </AuthProvider>
     </Router>
   );
 }

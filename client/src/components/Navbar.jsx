@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,11 +42,11 @@ const Navbar = () => {
       </Link>
 
       {/* Centered Desktop Navigation - Absolute positioning for strict centering */}
-      {/* Centered Desktop Navigation - Absolute positioning for strict centering */}
       <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 h-full items-center gap-9 text-sm font-medium">
         <Link to="/cheatsheets" className={`transition-colors ${isActive('/cheatsheets')}`}>Cheat Sheets</Link>
         <Link to="/languages" className={`transition-colors ${isActive('/languages')}`}>Languages</Link>
         <Link to="/roadmap" className={`transition-colors ${isActive('/roadmap')}`}>Blueprint</Link>
+        <Link to="/setup" className={`transition-colors ${isActive('/setup')}`}>Setup</Link>
         <Link to="/errors" className={`transition-colors ${isActive('/errors')}`}>Bugs & Fixes</Link>
         <Link to="/tools" className={`transition-colors ${isActive('/tools')}`}>Tools</Link>
       </div>
@@ -72,9 +74,20 @@ const Navbar = () => {
           </svg>
           <span className="text-[10px] font-mono border border-white/10 rounded px-1 group-hover:border-white/30">⌘K</span>
         </button>
-        <Link to="/dashboard" className="hidden md:block bg-ossium-text text-ossium-darker px-4 py-2 rounded-md text-sm font-bold hover:bg-white/90 hover:scale-105 transition-all">
-          Dashboard
-        </Link>
+
+        {user ? (
+          <Link
+            to="/dashboard"
+            state={{ tab: 'snippets' }}
+            className="hidden md:block bg-ossium-text text-ossium-darker px-4 py-2 rounded-md text-sm font-bold hover:bg-white/90 hover:scale-105 transition-all"
+          >
+            My Snippets
+          </Link>
+        ) : (
+          <Link to="/login" className="hidden md:block bg-ossium-accent text-ossium-darker px-4 py-2 rounded-md text-sm font-bold hover:bg-white/90 hover:scale-105 transition-all">
+            Log In
+          </Link>
+        )}
 
         {/* Mobile Menu Toggle */}
         <button
@@ -91,12 +104,19 @@ const Navbar = () => {
           <Link to="/cheatsheets" className={`text-lg font-medium ${isActive('/cheatsheets')}`} onClick={() => setMobileMenuOpen(false)}>Cheat Sheets</Link>
           <Link to="/languages" className={`text-lg font-medium ${isActive('/languages')}`} onClick={() => setMobileMenuOpen(false)}>Languages</Link>
           <Link to="/roadmap" className={`text-lg font-medium ${isActive('/roadmap')}`} onClick={() => setMobileMenuOpen(false)}>Blueprint</Link>
+          <Link to="/setup" className={`text-lg font-medium ${isActive('/setup')}`} onClick={() => setMobileMenuOpen(false)}>Setup</Link>
           <Link to="/errors" className={`text-lg font-medium ${isActive('/errors')}`} onClick={() => setMobileMenuOpen(false)}>Bugs & Fixes</Link>
           <Link to="/tools" className={`text-lg font-medium ${isActive('/tools')}`} onClick={() => setMobileMenuOpen(false)}>Tools</Link>
           <div className="h-px bg-white/5 w-full my-2"></div>
-          <Link to="/dashboard" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
-            Dashboard
-          </Link>
+          {user ? (
+            <Link to="/dashboard" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
+              Dashboard
+            </Link>
+          ) : (
+            <Link to="/login" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
+              Log In
+            </Link>
+          )}
         </div>
       )}
     </nav>

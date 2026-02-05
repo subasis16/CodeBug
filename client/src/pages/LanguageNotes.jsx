@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { FiArrowLeft, FiBook, FiCode, FiLayers, FiCpu, FiDatabase, FiTerminal } from 'react-icons/fi';
-import { SiJavascript, SiReact, SiPython, SiGo, SiRust, SiCplusplus, SiTypescript, SiPhp, SiRuby, SiSwift, SiKotlin, SiPostgresql } from 'react-icons/si';
+import { SiJavascript, SiReact, SiPython, SiGo, SiRust, SiCplusplus, SiTypescript, SiPhp, SiRuby, SiSwift, SiKotlin, SiPostgresql, SiVuedotjs } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa';
 
 const notesData = {
@@ -148,6 +148,96 @@ const notesData = {
     sections: [
       { title: 'Interfaces', content: 'One of TypeScript\'s core principles is that type checking focuses on the shape that values have. This is sometimes called "duck typing" or "structural subtyping".', code: 'interface Person {\n  firstName: string;\n  lastName: string;\n}' },
       { title: 'Generics', content: 'Generics provide a way to create reusable components. A component can work with a variety of types rather than a single one.', code: 'function identity<T>(arg: T): T {\n  return arg;\n}' }
+    ]
+  },
+  vuejs: {
+    name: 'Vue.js',
+    icon: <SiVuedotjs />,
+    color: 'text-green-500',
+    description: 'Vue.js is a progressive framework for building user interfaces. It is designed to be incrementally adoptable.',
+    sections: [
+      {
+        title: 'Reactivity',
+        content: 'Vue uses a reactivity system that automatically tracks dependencies and updates the DOM when state changes. It uses proxies to detect property access and modification.',
+        code: `import { reactive } from 'vue'\n\nconst state = reactive({ count: 0 })\nstate.count++ // DOM updates automatically`
+      },
+      {
+        title: 'Directives',
+        content: 'Directives are special attributes with the v- prefix. Directive attribute values are expected to be a single JavaScript expression.',
+        code: `<p v-if="seen">Now you see me</p>\n<a v-bind:href="url">Link</a>`
+      }
+    ]
+  },
+  php: {
+    name: 'PHP',
+    icon: <SiPhp />,
+    color: 'text-indigo-400',
+    description: 'PHP is a popular general-purpose scripting language that is especially suited to web development.',
+    sections: [
+      {
+        title: 'Associative Arrays',
+        content: 'PHP arrays can be treated as an array (indexed) or a dictionary (associative keys).',
+        code: `$data = array("first" => "John", "last" => "Doe");\necho $data["first"]; // John`
+      },
+      {
+        title: 'Classes and Objects',
+        content: 'PHP is a fully object-oriented language. Classes are blueprints for objects.',
+        code: `class Car {\n  public $color;\n  public function __construct($color) {\n    this->color = $color;\n  }\n}`
+      }
+    ]
+  },
+  ruby: {
+    name: 'Ruby',
+    icon: <SiRuby />,
+    color: 'text-red-500',
+    description: 'Ruby is a dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write.',
+    sections: [
+      {
+        title: 'Blocks',
+        content: 'Blocks are chunks of code enclosed between braces or do..end that can be passed to methods.',
+        code: `5.times do |i|\n  puts "Hello #{i}"\nend`
+      },
+      {
+        title: 'Symbols',
+        content: 'Symbols are lightweight strings. They are used as unique identifiers and are more memory efficient than strings.',
+        code: `status = :active\nuser = { :name => "Rob", :age => 25 }`
+      }
+    ]
+  },
+  swift: {
+    name: 'Swift',
+    icon: <SiSwift />,
+    color: 'text-orange-500',
+    description: 'Swift is a powerful and intuitive programming language for iOS, iPadOS, macOS, tvOS, and watchOS.',
+    sections: [
+      {
+        title: 'Optionals',
+        content: 'Optionals are a type that handles the absence of a value. They say either "there is a value, and it equals x" or "there isn\'t a value at all".',
+        code: `var surveyAnswer: String?\n// surveyAnswer is automatically set to nil`
+      },
+      {
+        title: 'Structs vs Classes',
+        content: 'Structures are value types and are copied when passed around. Classes are reference types.',
+        code: `struct Card {\n  var rank: Int\n  var suit: String\n}`
+      }
+    ]
+  },
+  kotlin: {
+    name: 'Kotlin',
+    icon: <SiKotlin />,
+    color: 'text-purple-500',
+    description: 'Kotlin is a cross-platform, statically typed, general-purpose programming language with type inference. It is completely interoperable with Java.',
+    sections: [
+      {
+        title: 'Null Safety',
+        content: 'Kotlin\'s type system is aimed at eliminating the danger of null references, also known as The Billion Dollar Mistake.',
+        code: `var a: String = "abc" // Regular initialization means non-null by default\n// a = null // compilation error`
+      },
+      {
+        title: 'Coroutines',
+        content: 'Coroutines are a way to write asynchronous code sequentially. They are like light-weight threads.',
+        code: `GlobalScope.launch {\n    delay(1000L)\n    println("World!")\n}`
+      }
     ]
   }
 };
