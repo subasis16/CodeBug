@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiTrash2, FiSave, FiEdit3 } from 'react-icons/fi';
 import { supabase } from '../lib/supabaseClient';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 const Notes = () => {
   const { user } = useAuth();

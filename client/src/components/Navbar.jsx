@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);

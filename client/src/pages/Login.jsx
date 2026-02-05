@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { Navigate } from 'react-router-dom';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 

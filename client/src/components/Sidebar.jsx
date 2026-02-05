@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiGrid, FiCode, FiStar, FiBook, FiSettings, FiBox, FiCpu, FiLogOut } from 'react-icons/fi';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
   const { signOut } = useAuth();
