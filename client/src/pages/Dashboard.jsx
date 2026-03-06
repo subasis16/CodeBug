@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (location.state?.tab) {
-      setCurrentTab(location.state.tab);
+      setCurrentTab(location.state.tab); // eslint-disable-line react-hooks/set-state-in-effect
     } else if (location.pathname === '/dashboard' && !location.state?.tab) {
       // Intentionally do nothing here to allow internal state to persist
       // unless we specifically want to reset on navigation
@@ -84,56 +84,60 @@ const Dashboard = () => {
 
           {/* User Profile / Dashboard Home */}
           {currentTab === 'dashboard' && (
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col items-center justify-center py-12">
               {user ? (
-                <div className="relative overflow-hidden bg-[#121212] border border-white/5 rounded-2xl p-8 max-w-4xl mx-auto backdrop-blur-sm group/card">
-                  {/* Decorative Background Blob */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-ossium-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-opacity duration-500 group-hover/card:opacity-100 opacity-50"></div>
-
-                  <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-                    {/* Profile Column */}
-                    <div className="flex-shrink-0 flex flex-col items-center md:items-start gap-4 mx-auto md:mx-0">
-                      <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-ossium-accent to-emerald-600 p-[2px] shadow-lg shadow-ossium-accent/20">
-                        <div className="w-full h-full bg-[#0a0a0a] rounded-xl flex items-center justify-center text-4xl font-black text-white/90">
-                          {user.email?.charAt(0).toUpperCase()}
-                        </div>
+                <div className="bg-[#121212] border border-white/5 rounded-2xl p-8 md:p-12 w-full max-w-4xl backdrop-blur-sm transition-all duration-300">
+                  <div className="flex flex-col md:flex-row gap-12 items-center md:items-start">
+                    {/* Left side: Avatar & Welcome */}
+                    <div className="flex flex-col items-center gap-4 min-w-[200px]">
+                      <div className="w-24 h-24 rounded-2xl bg-[#0a0a0a] border-2 border-ossium-accent shadow-[0_0_20px_rgba(202,255,51,0.2)] flex items-center justify-center text-4xl font-black text-white/90">
+                        {user.email?.charAt(0).toUpperCase()}
                       </div>
-                      <div className="text-center md:text-left">
-                        <h2 className="text-2xl font-bold text-white tracking-tight">Welcome back</h2>
-                        <div className="flex items-center gap-2 justify-center md:justify-start mt-1">
-                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-                          <p className="text-ossium-muted font-mono text-sm">{user.email}</p>
+                      <div className="text-center">
+                        <h2 className="text-3xl font-bold text-white tracking-tight">Welcome back</h2>
+                        <div className="flex items-center gap-2 justify-center mt-1">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                          <p className="text-ossium-muted text-sm font-medium">{user.email}</p>
                         </div>
                       </div>
                     </div>
 
-                    {/* Stats Grid */}
-                    <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="bg-white/5 border border-white/5 rounded-xl p-5 hover:bg-white/10 transition-colors group">
-                        <div className="flex items-start justify-between mb-2">
-                          <p className="text-ossium-muted text-xs font-bold uppercase tracking-wider">Access</p>
-                          <FiZap className="text-ossium-accent group-hover:scale-110 transition-transform" />
-                        </div>
-                        <p className="text-xl font-bold text-white">Unlimited</p>
-                        <p className="text-xs text-white/40 mt-1">CodeRef is 100% Free</p>
-                      </div>
-
-                      <div className="bg-white/5 border border-white/5 rounded-xl p-5 hover:bg-white/10 transition-colors group">
-                        <div className="flex items-start justify-between mb-2">
-                          <p className="text-ossium-muted text-xs font-bold uppercase tracking-wider">Last Seen</p>
-                          <FiClock className="text-blue-400 group-hover:scale-110 transition-transform" />
-                        </div>
-                        <p className="text-lg font-bold text-white">{new Date(user.last_sign_in_at).toLocaleDateString()}</p>
-                        <p className="text-xs text-white/40 mt-1">{new Date(user.last_sign_in_at).toLocaleTimeString()}</p>
-                      </div>
-
-                      <div className="bg-white/5 border border-white/5 rounded-xl p-5 hover:bg-white/10 transition-colors group sm:col-span-2">
-                        <div className="flex items-center justify-between">
-                          <div className="overflow-hidden">
-                            <p className="text-ossium-muted text-xs font-bold uppercase tracking-wider mb-1">User ID</p>
-                            <p className="font-mono text-xs text-white/60 bg-black/30 px-2 py-1 rounded select-all truncate max-w-[200px] sm:max-w-full">{user.id}</p>
+                    {/* Right side: Information Grid */}
+                    <div className="flex-1 w-full flex flex-col gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Access Card */}
+                        <div className="bg-[#1A1A1A] border border-white/5 rounded-xl p-5 group">
+                          <div className="flex items-start justify-between mb-2">
+                            <p className="text-ossium-muted text-[10px] font-bold uppercase tracking-wider">Access</p>
+                            <FiZap className="text-ossium-accent" />
                           </div>
-                          <FiShield className="text-purple-400 text-xl flex-shrink-0 ml-4" />
+                          <p className="text-xl font-bold text-white leading-tight">Unlimited</p>
+                          <p className="text-[10px] text-ossium-muted mt-1">CodeRef is 100% Free</p>
+                        </div>
+
+                        {/* Last Seen Card */}
+                        <div className="bg-[#1A1A1A] border border-white/5 rounded-xl p-5 group">
+                          <div className="flex items-start justify-between mb-2">
+                            <p className="text-ossium-muted text-[10px] font-bold uppercase tracking-wider">Last Seen</p>
+                            <FiClock className="text-blue-400" />
+                          </div>
+                          <p className="text-xl font-bold text-white leading-tight">{new Date(user.last_sign_in_at).toLocaleDateString()}</p>
+                          <p className="text-[10px] text-ossium-muted mt-1">{new Date(user.last_sign_in_at).toLocaleTimeString()}</p>
+                        </div>
+                      </div>
+
+                      {/* User ID Section */}
+                      <div className="bg-[#1A1A1A] border border-white/5 rounded-xl p-5 mt-auto">
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-ossium-muted text-[10px] font-bold uppercase tracking-wider mb-2">User ID</p>
+                            <div className="bg-black/40 border border-white/5 rounded px-3 py-1.5 overflow-hidden">
+                              <p className="font-mono text-[11px] text-white/50 truncate select-all">{user.id}</p>
+                            </div>
+                          </div>
+                          <div className="flex-shrink-0">
+                            <FiShield className="text-purple-400 text-xl" />
+                          </div>
                         </div>
                       </div>
                     </div>

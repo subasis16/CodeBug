@@ -12,6 +12,7 @@ import Tools from './pages/Tools';
 import Roadmap from './pages/Roadmap';
 import AIWorkflow from './pages/AIWorkflow';
 import Setup from './pages/Setup';
+import Fundamentals from './pages/Fundamentals';
 import About from './pages/About';
 import Login from './pages/Login';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -61,6 +62,7 @@ function App() {
               <Route path="/languages/:id" element={<LanguageNotes />} />
               <Route path="/errors" element={<Errors />} />
               <Route path="/tools" element={<Tools />} />
+              <Route path="/fundamentals" element={<Fundamentals />} />
               <Route path="/roadmap" element={<Roadmap />} />
               <Route path="/ai" element={<AIWorkflow />} />
               <Route path="/setup" element={<Setup />} />

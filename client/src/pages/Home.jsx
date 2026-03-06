@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import CategoryCards from '../components/CategoryCards';
 import Workflow from '../components/Workflow';
-import CommunityLinks from '../components/CommunityLinks';
+import CoreConceptsOverview from '../components/CoreConceptsOverview';
 import Footer from '../components/Footer';
 
 function Home() {
@@ -14,7 +14,7 @@ function Home() {
         <Hero />
         <CategoryCards />
         <Workflow />
-        <CommunityLinks />
+        <CoreConceptsOverview />
       </main>
       <Footer />
     </>
