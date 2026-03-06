@@ -224,7 +224,6 @@ const Dashboard = () => {
           {/* Work in progress placeholder for other tabs */}
           {currentTab !== 'dashboard' && currentTab !== 'docs' && currentTab !== 'snippets' && currentTab !== 'notes' && (
             <div className="flex flex-col items-center justify-center py-20 text-ossium-muted">
-              <div className="text-4xl mb-4 text-ossium-accent/50">🚧</div>
               <h3 className="text-xl font-bold text-white mb-2">Work in Progress</h3>
               <p>The {currentTab} section is currently under development.</p>
             </div>
